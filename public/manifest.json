@@ -1,8 +1,9 @@
 {
-  "name": "Captains log",
-  "short_name": "Captains log",
-  "splay": "fullscreen",
+  "name": "Captains Log",
+  "short_name": "Captains Log",
+  "display": "fullscreen",
   "orientation": "portrait",
+  "description": "A log for captains to keep track of their ship's activities.",
   "scope": "/",
   "start_url": "/",
   "icons": [
@@ -47,5 +48,21 @@
       "type": "image/png"
     }
   ],
+  "screenshots": [    
+   {
+
+     "src": "images/screen.png",
+      "sizes": "640x320",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Application"
+    },
+    {
+      "src": "images/screen-01.png",
+      "sizes": "700x819",
+      "type": "image/png",
+      "label": "Application"
+    }
+ ],
   "splash_pages": null
 }
