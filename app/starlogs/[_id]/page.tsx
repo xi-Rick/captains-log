@@ -54,7 +54,7 @@ export default function StarLogsPage({ params }: StarLogsPageProps) {
 
   const handleDelete = async () => {
     try {
-      const response = await fetch(`/api/getStarlogs`, {
+      const response = await fetch(`/api/deleteStarlog`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',

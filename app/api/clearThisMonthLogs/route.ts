@@ -15,23 +15,34 @@ async function getCollection() {
 export async function DELETE(req: NextRequest) {
   try {
     const collection = await getCollection();
-
+    
+    // Get the current date
     const now = new Date();
+    const firstDayOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+    const lastDayOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
 
-    await collection.deleteMany({
-      id: {
-        $gte: new Date(now.getFullYear(), now.getMonth(), 1),
-        $lt: new Date(now.getFullYear(), now.getMonth() + 1, 1),
-      },
+    // Delete all logs within the current month
+    const result = await collection.deleteMany({
+      timestamp: {
+        $gte: firstDayOfMonth.toISOString(),
+        $lte: lastDayOfMonth.toISOString()
+      }
     });
 
-    return NextResponse.json({
-      message: 'This month logs cleared successfully',
-    });
+    if (result.deletedCount > 0) {
+      return NextResponse.json({ 
+        message: `Deleted ${result.deletedCount} log(s) for the current month` 
+      });
+    } else {
+      return NextResponse.json({ message: 'No logs found for the current month' }, { status: 404 });
+    }
   } catch (error) {
+    console.error('Error deleting records:', error);
     return NextResponse.json(
-      { error: 'Failed to clear this month logs' },
+      { error: 'An error occurred while deleting logs' },
       { status: 500 },
     );
+  } finally {
+    await client.close();
   }
 }

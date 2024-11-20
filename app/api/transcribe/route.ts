@@ -8,7 +8,6 @@ interface TranscribeRequestBody {
   content: string;
   timestamp: string;
   duration: number;
-  tags: string[];
   sentiment: string;
   keywords: string[];
   userId: string;
@@ -22,7 +21,6 @@ export async function POST(req: Request) {
       content,
       timestamp,
       duration,
-      tags,
       sentiment,
       keywords,
       userId,
@@ -51,7 +49,6 @@ export async function POST(req: Request) {
       content,
       timestamp,
       duration,
-      tags,
       sentiment,
       keywords,
       userId,

@@ -61,6 +61,11 @@ export default function Documentation() {
 
   const transcriptionFields = [
     {
+      field: 'title',
+      type: 'string',
+      description: 'AI-generated title for the transcription',
+    },
+    {
       field: 'id',
       type: 'string',
       description: 'Unique identifier for the transcription',
@@ -75,11 +80,6 @@ export default function Documentation() {
       field: 'duration',
       type: 'number',
       description: 'Length of the audio in seconds',
-    },
-    {
-      field: 'tags',
-      type: 'string[]',
-      description: 'AI-generated tags for content categorization',
     },
     {
       field: 'sentiment',

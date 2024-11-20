@@ -4,8 +4,9 @@ import { buttonVariants } from '~/components/ui/button';
 import { RevealFx } from '~/once-ui/components';
 import { AudioRecorderWithVisualizer } from '~/components/ui/audio-recorder';
 import { TooltipProvider } from '@radix-ui/react-tooltip';
-import { Rocket, Stars, ChevronLeft, Mic2, Waves, Globe2 } from 'lucide-react';
+import { Rocket, Stars, Mic2, Waves, Globe2, ArrowLeft } from 'lucide-react';
 import { Progress } from '@/components/ui/progress';
+import { Button } from '~/components/ui/button';
 
 import {
   Card,
@@ -58,7 +59,6 @@ const calculateStardate = (): number => {
 };
 
 export default function NewStarlogPage() {
-  const isLoading = true; // Example state
   return (
     <RevealFx>
       <section
@@ -66,16 +66,13 @@ export default function NewStarlogPage() {
         className="relative container mx-auto px-4 py-14 max-w-4xl"
       >
         {/* Back to Dashboard Link */}
-        <Link
-          href="/dashboard"
-          className={buttonVariants({
-            variant: 'ghost',
-            className: 'absolute top-4 left-4 flex items-center gap-2',
-          })}
-        >
-          <ChevronLeft className="w-4 h-4" />
-          Back to Bridge
-        </Link>
+        <Link href="/dashboard">
+            <Button variant="ghost" className="flex items-center gap-2">
+              <ArrowLeft className="h-4 w-4" />
+              Back to Bridge
+            </Button>
+          </Link>
+          <br className="h-4" />
 
         {/* Content Container */}
         <div className="relative z-10 space-y-8">

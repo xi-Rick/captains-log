@@ -15,13 +15,20 @@ async function getCollection() {
 export async function DELETE(req: NextRequest) {
   try {
     const collection = await getCollection();
-    await collection.deleteMany({});
+    
+    // Delete ALL logs in the collection
+    const result = await collection.deleteMany({});
 
-    return NextResponse.json({ message: 'All logs cleared successfully' });
+    return NextResponse.json({ 
+      message: `Deleted all ${result.deletedCount} log(s) from the database` 
+    });
   } catch (error) {
+    console.error('Error deleting all records:', error);
     return NextResponse.json(
-      { error: 'Failed to clear logs' },
+      { error: 'An error occurred while deleting all logs' },
       { status: 500 },
     );
+  } finally {
+    await client.close();
   }
 }

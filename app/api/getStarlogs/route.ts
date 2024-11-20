@@ -90,56 +90,6 @@ export async function GET(req: NextRequest) {
   }
 }
 
-// POST method for adding a new star log
-export async function POST(req: NextRequest) {
-  try {
-    const newLog: StarLog = await req.json();
-
-    // Ensure timestamp is properly set if not provided
-    if (!newLog.timestamp) {
-      newLog.timestamp = new Date().toISOString(); // Store as ISO string
-    }
-
-    const collection = await getCollection();
-    const result = await collection.insertOne(newLog);
-
-    return NextResponse.json({
-      message: 'Log added successfully',
-      _id: result.insertedId.toString(),
-    });
-  } catch (error) {
-    console.error('Error adding record:', error);
-    return NextResponse.json(
-      { error: 'An error occurred while adding the log' },
-      { status: 500 },
-    );
-  }
-}
-
-// DELETE method for deleting a star log
-export async function DELETE(req: NextRequest) {
-  try {
-    const { id } = await req.json(); // The ID of the record to delete (passed as JSON body)
-
-    const collection = await getCollection();
-    const result = await collection.deleteOne({ _id: new ObjectId(id) });
-
-    if (result.deletedCount === 1) {
-      return NextResponse.json({ message: 'Log deleted successfully' });
-    } else {
-      return NextResponse.json({ message: 'Log not found' }, { status: 404 });
-    }
-  } catch (error) {
-    console.error('Error deleting record:', error);
-    return NextResponse.json(
-      { error: 'An error occurred while deleting the log' },
-      { status: 500 },
-    );
-  } finally {
-    await client.close();
-  }
-}
-
 // PATCH method for updating multiple star logs (example: update the "title" of all logs)
 export async function PATCH(req: NextRequest) {
   try {
