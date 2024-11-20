@@ -87,9 +87,7 @@ export async function GET(req: NextRequest) {
       { error: 'An error occurred while fetching data from MongoDB' },
       { status: 500 },
     );
-  } finally {
-    await client.close();
-  }
+  } 
 }
 
 // POST method for adding a new star log
@@ -115,8 +113,6 @@ export async function POST(req: NextRequest) {
       { error: 'An error occurred while adding the log' },
       { status: 500 },
     );
-  } finally {
-    await client.close();
   }
 }
 

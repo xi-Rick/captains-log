@@ -1,3 +1,4 @@
+// lib/mongodb.ts
 import { MongoClient } from 'mongodb';
 
 // Extend the NodeJS.Global type
