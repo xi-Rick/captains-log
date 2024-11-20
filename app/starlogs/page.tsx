@@ -98,6 +98,26 @@ export default function StarLogs() {
     },
   };
 
+  function highlightText(text: string, searchTerm: string) {
+    if (!searchTerm) return text;
+
+    const regex = new RegExp(`(${searchTerm})`, 'gi');
+    const parts = text.split(regex);
+
+    return parts.map((part, index) =>
+      regex.test(part) ? (
+        <span
+          key={index}
+          className="bg-red-500 text-primary-foreground rounded px-1 py-0.5"
+        >
+          {part}
+        </span>
+      ) : (
+        part
+      )
+    );
+  }
+
   return (
     <MotionConfig reducedMotion="user">
       <motion.div
@@ -211,7 +231,7 @@ export default function StarLogs() {
                               .split('\n')
                               .map((paragraph, index) => (
                                 <p key={index} className="mb-4">
-                                  {paragraph}
+                                  {highlightText(paragraph, searchTerm)}
                                 </p>
                               ))
                           ) : (
