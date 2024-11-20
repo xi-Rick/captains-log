@@ -48,10 +48,9 @@
       "type": "image/png"
     }
   ],
-  "screenshots": [    
-   {
-
-     "src": "images/screen.png",
+  "screenshots": [
+    {
+      "src": "images/screen.png",
       "sizes": "640x320",
       "type": "image/png",
       "form_factor": "wide",
@@ -63,6 +62,6 @@
       "type": "image/png",
       "label": "Application"
     }
- ],
+  ],
   "splash_pages": null
 }

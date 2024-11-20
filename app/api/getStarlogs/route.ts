@@ -87,7 +87,7 @@ export async function GET(req: NextRequest) {
       { error: 'An error occurred while fetching data from MongoDB' },
       { status: 500 },
     );
-  } 
+  }
 }
 
 // POST method for adding a new star log

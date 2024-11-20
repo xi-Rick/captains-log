@@ -1,24 +1,19 @@
 import React from 'react';
 import Link from 'next/link';
 import { buttonVariants } from '~/components/ui/button';
-import { Metadata } from 'next';
 import { RevealFx } from '~/once-ui/components';
 import { AudioRecorderWithVisualizer } from '~/components/ui/audio-recorder';
 import { TooltipProvider } from '@radix-ui/react-tooltip';
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-} from '@/components/ui/card';
 import { Rocket, Stars, ChevronLeft, Mic2, Waves, Globe2 } from 'lucide-react';
 import { Progress } from '@/components/ui/progress';
 
-export const metadata: Metadata = {
-  title: "Captain's Log",
-  description: 'Record your space journey',
-};
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+} from '@/components/ui/card';
 
 const SignalVisualizer = () => {
   return (
@@ -63,88 +58,102 @@ const calculateStardate = (): number => {
 };
 
 export default function NewStarlogPage() {
+  const isLoading = true; // Example state
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background to-background/50 relative overflow-hidden">
-      {/* Animated stars background */}
-      <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-[radial-gradient(white_1px,transparent_1px)] bg-[length:50px_50px] opacity-25"></div>
-      </div>
-      <div className="container mx-auto px-4 py-8 relative">
-        <RevealFx>
-          <Link
-            href="/dashboard"
-            className={buttonVariants({
-              variant: 'ghost',
-              className: 'absolute top-4 left-4 flex items-center gap-2',
-            })}
-          >
-            <ChevronLeft className="w-4 h-4" />
-            Back to Bridge
-          </Link>
-          <div className="max-w-4xl mx-auto pt-16">
-            <Card className="backdrop-blur-sm bg-background/80 border-primary/20">
-              <CardHeader className="space-y-4 overflow-visible">
-                <div className="flex items-center justify-center space-x-2">
-                  <Rocket className="w-8 h-8 text-primary animate-pulse" />
-                  <CardTitle className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary-foreground">
-                    New Starlog Entry
-                  </CardTitle>
-                  <Stars className="w-8 h-8 text-primary animate-pulse" />
-                </div>
-                <CardDescription className="text-lg text-center">
-                  Record your journey through the cosmos
-                </CardDescription>
-              </CardHeader>
+    <RevealFx>
+      <section
+        id="dashboard"
+        className="relative container mx-auto px-4 py-14 max-w-4xl"
+      >
+        {/* Back to Dashboard Link */}
+        <Link
+          href="/dashboard"
+          className={buttonVariants({
+            variant: 'ghost',
+            className: 'absolute top-4 left-4 flex items-center gap-2',
+          })}
+        >
+          <ChevronLeft className="w-4 h-4" />
+          Back to Bridge
+        </Link>
 
-              <CardContent className="space-y-8">
-                {/* Centered Audio Component with Glow Effect */}
-                <div className="relative mx-auto max-w-3xl">
-                  <div className="absolute -inset-1 bg-gradient-to-r from-primary to-primary-foreground opacity-25 blur"></div>
+        {/* Content Container */}
+        <div className="relative z-10 space-y-8">
+          {/* Welcome Banner */}
+          <Card className="shadow-lg">
+            <CardHeader className="space-y-4 overflow-visible text-center">
+              <div className="flex items-center justify-center space-x-4">
+                <Rocket className="w-8 h-8 text-primary animate-pulse" />
+                <CardTitle className="text-3xl md:text-4xl lg:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary-foreground">
+                  New Starlog Entry
+                </CardTitle>
+                <Stars className="w-8 h-8 text-primary animate-pulse" />
+              </div>
+              <CardDescription className="text-lg">
+                Record your journey through the cosmos
+              </CardDescription>
+            </CardHeader>
+          </Card>
+
+          {/* Starlog Entries */}
+          <Card className="shadow-md">
+            <br className="animate-fade-in" />
+            <RevealFx speed="medium">
+              <CardContent>
+                <div className="relative mx-auto max-w-3xl space-y-6">
+                  {/* Audio Recorder with Glow Effect */}
                   <div className="relative">
-                    <TooltipProvider>
-                      <AudioRecorderWithVisualizer />
-                    </TooltipProvider>
+                    <div className="absolute -inset-1 bg-gradient-to-r from-primary to-primary-foreground opacity-25 blur"></div>
+                    <div className="relative">
+                      <TooltipProvider>
+                        <AudioRecorderWithVisualizer />
+                      </TooltipProvider>
+                    </div>
                   </div>
-                </div>
 
-                {/* Signal Strength Indicator */}
-                <div className="space-y-4 max-w-md mx-auto">
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-muted-foreground flex items-center gap-2">
-                      <Waves className="w-4 h-4" />
-                      Signal Strength
+                  {/* Signal Strength Indicator */}
+                  <div className="space-y-4 max-w-md mx-auto">
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-muted-foreground flex items-center gap-2">
+                        <Waves className="w-4 h-4" />
+                        Signal Strength
+                      </span>
+                      <span className="text-primary font-semibold">
+                        Excellent
+                      </span>
+                    </div>
+                    <Progress value={85} className="h-2" />
+                  </div>
+
+                  {/* Signal Visualizer */}
+                  <div className="bg-background/40 rounded-lg p-4 max-w-md mx-auto">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm text-muted-foreground flex items-center gap-2">
+                        <Globe2 className="w-4 h-4" />
+                        Subspace Frequency
+                      </span>
+                    </div>
+                    <SignalVisualizer />
+                  </div>
+
+                  {/* Recording Instructions */}
+                  <div className="flex justify-center items-center gap-4 text-sm text-muted-foreground">
+                    <Mic2 className="w-4 h-4" />
+                    <span className="font-semibold text-primary">
+                      Speak clearly into your ship's communication system
                     </span>
-                    <span className="text-primary">Excellent</span>
                   </div>
-                  <Progress value={85} className="h-2" />
-                </div>
-
-                {/* Custom Signal Visualizer */}
-                <div className="bg-background/40 rounded-lg p-4 max-w-md mx-auto">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm text-muted-foreground flex items-center gap-2">
-                      <Globe2 className="w-4 h-4" />
-                      Subspace Frequency
-                    </span>
-                  </div>
-                  <SignalVisualizer />
-                </div>
-
-                <div className="flex justify-center items-center gap-4 text-sm text-muted-foreground">
-                  <Mic2 className="w-4 h-4" />
-                  <span className="font-semibold text-primary ">
-                    Speak clearly into your ship's communication system
-                  </span>
                 </div>
               </CardContent>
-            </Card>
+            </RevealFx>
+          </Card>
 
-            <div className="mt-8 text-center text-sm text-muted-foreground">
-              <p>Stardate {calculateStardate()}</p>
-            </div>
+          {/* Stardate Display */}
+          <div className="mt-8 text-center text-sm text-muted-foreground">
+            <p>Stardate {calculateStardate()}</p>
           </div>
-        </RevealFx>
-      </div>
-    </div>
+        </div>
+      </section>
+    </RevealFx>
   );
 }
