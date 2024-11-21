@@ -30,15 +30,15 @@ export default function HeroSection() {
 
       {/* Hero Title */}
       <h1 className="animate-fade-in -translate-y-4 text-balance bg-gradient-to-br from-black from-30% to-black/40 bg-clip-text py-6 text-5xl font-medium leading-none tracking-tighter text-transparent opacity-0 [--animation-delay:200ms] sm:text-6xl md:text-7xl lg:text-8xl dark:from-white dark:to-white/40">
-        Transcribe Your Journey,
-        <br className="hidden md:block" />
-        One Starlog at a Time.
+        Transcribe Your Journey
+        <br className="md:block" />
+        One Starlog at a Time
       </h1>
 
       {/* Subtitle */}
       <p className="animate-fade-in mb-12 -translate-y-4 text-balance text-lg tracking-tight text-gray-400 opacity-0 [--animation-delay:400ms] md:text-xl">
         Harness the power of AI and beautifully designed tools
-        <br className="hidden md:block" />
+        <br className="md:block" />
         to capture, organize, and relive your thoughts.
       </p>
 
