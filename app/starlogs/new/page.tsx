@@ -47,10 +47,10 @@ const calculateStardate = (): number => {
   const dateReal =
     now.getFullYear() +
     secondsAlongYear /
-      ((now.getFullYear() % 4 === 0 && now.getFullYear() % 100 !== 0) ||
+    ((now.getFullYear() % 4 === 0 && now.getFullYear() % 100 !== 0) ||
       now.getFullYear() % 400 === 0
-        ? 31622400
-        : 31536000);
+      ? 31622400
+      : 31536000);
 
   // Calculate TNG stardate
   const stardate = (dateReal - TNG_ROOT) * TNG_INCREMENT;
@@ -73,7 +73,7 @@ export default function NewStarlogPage() {
       <RevealFx>
         <section
           id="dashboard"
-          className="relative container mx-auto px-4 py-14 max-w-4xl"
+          className="mx-auto max-w-7xl px-6 text-center md:px-8"
         >
           {/* Back to Dashboard Link */}
           <Link href="/dashboard">
@@ -97,7 +97,7 @@ export default function NewStarlogPage() {
                   <Stars className="w-8 h-8 text-primary animate-pulse" />
                 </div>
                 <CardDescription className="text-lg">
-                  Record your journey through the cosmos
+                  Record the details of your new starlog entry.
                 </CardDescription>
               </CardHeader>
             </Card>
