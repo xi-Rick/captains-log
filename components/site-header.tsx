@@ -69,7 +69,7 @@ export function SiteHeader() {
               alt="Captain's Log logo"
               className="text-primary size-8"
             />
-            <span className="self-center whitespace-nowrap text-md font-semibold dark:text-white">
+            <span className="self-center whitespace-nowrap text-md font-semibold dark:text-white hidden sm:inline">
               Captain's Log
             </span>
           </Link>
@@ -111,9 +111,8 @@ export function SiteHeader() {
           exit="exit"
           variants={mobilenavbarVariant}
           animate={hamburgerMenuIsOpen ? 'animate' : 'exit'}
-          className={`bg-background/70 fixed left-0 top-0 z-50 h-screen w-full overflow-auto backdrop-blur-md ${
-            !hamburgerMenuIsOpen ? 'pointer-events-none' : ''
-          }`}
+          className={`bg-background/70 fixed left-0 top-0 z-50 h-screen w-full overflow-auto backdrop-blur-md ${!hamburgerMenuIsOpen ? 'pointer-events-none' : ''
+            }`}
         >
           <div className="container flex h-14 items-center justify-between">
             <Link className="text-md flex items-center" href="/">
