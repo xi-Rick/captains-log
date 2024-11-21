@@ -114,7 +114,7 @@ export default function StarLogs() {
         </span>
       ) : (
         part
-      )
+      ),
     );
   }
 

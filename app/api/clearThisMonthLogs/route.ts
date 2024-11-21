@@ -15,7 +15,7 @@ async function getCollection() {
 export async function DELETE(req: NextRequest) {
   try {
     const collection = await getCollection();
-    
+
     // Get the current date
     const now = new Date();
     const firstDayOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
@@ -25,16 +25,19 @@ export async function DELETE(req: NextRequest) {
     const result = await collection.deleteMany({
       timestamp: {
         $gte: firstDayOfMonth.toISOString(),
-        $lte: lastDayOfMonth.toISOString()
-      }
+        $lte: lastDayOfMonth.toISOString(),
+      },
     });
 
     if (result.deletedCount > 0) {
-      return NextResponse.json({ 
-        message: `Deleted ${result.deletedCount} log(s) for the current month` 
+      return NextResponse.json({
+        message: `Deleted ${result.deletedCount} log(s) for the current month`,
       });
     } else {
-      return NextResponse.json({ message: 'No logs found for the current month' }, { status: 404 });
+      return NextResponse.json(
+        { message: 'No logs found for the current month' },
+        { status: 404 },
+      );
     }
   } catch (error) {
     console.error('Error deleting records:', error);

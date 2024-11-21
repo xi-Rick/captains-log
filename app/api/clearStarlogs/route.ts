@@ -15,12 +15,12 @@ async function getCollection() {
 export async function DELETE(req: NextRequest) {
   try {
     const collection = await getCollection();
-    
+
     // Delete ALL logs in the collection
     const result = await collection.deleteMany({});
 
-    return NextResponse.json({ 
-      message: `Deleted all ${result.deletedCount} log(s) from the database` 
+    return NextResponse.json({
+      message: `Deleted all ${result.deletedCount} log(s) from the database`,
     });
   } catch (error) {
     console.error('Error deleting all records:', error);

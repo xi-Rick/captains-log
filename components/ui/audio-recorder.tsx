@@ -9,9 +9,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Mic, Trash, PauseCircle, Play } from 'lucide-react';
-import { useTheme } from 'next-themes';
 import { cn } from '@/lib/utils';
-import { AudioVisualizer, LiveAudioVisualizer } from 'react-audio-visualize';
 import { v4 as uuidv4 } from 'uuid';
 import { TranscriptionData } from '~/app/types/transcription';
 import {
@@ -22,77 +20,148 @@ import {
 } from '@/app/utils/openaiUtils';
 
 type Props = {
-  className?: string;
-  timerClassName?: string;
   onTranscriptionComplete?: (transcription: string, title: string) => void;
+  userId?: string;
 };
 
 const padWithLeadingZeros = (num: number, length: number): string => {
   return String(num).padStart(length, '0');
 };
 
+const AudioVisualizer = ({ audioData = new Array(40).fill(0) }) => {
+  return (
+    <div className="flex justify-center items-center h-full w-full gap-[1%]">
+      {audioData.map((value, i) => {
+        // Calculate the height of each bar, with responsiveness in mind
+        const height = value
+          ? Math.min(40, value * 100) // Height scales dynamically based on audio data
+          : Math.random() * 20 + 10; // Random fallback height
+
+        return (
+          <div
+            key={i}
+            className="flex-1 bg-primary/60 rounded-full animate-pulse"
+            style={{
+              height: `${height}px`,
+              animationDelay: `${i * 0.1}s`,
+            }}
+          />
+        );
+      })}
+    </div>
+  );
+};
+
+const useAudioVisualization = (
+  mediaRecorder: MediaRecorder | null,
+  isPlayback = false,
+  blob?: Blob,
+) => {
+  const [audioData, setAudioData] = useState(new Array(40).fill(0));
+  const analyzerRef = useRef<AnalyserNode | null>(null);
+  const audioContextRef = useRef<AudioContext | null>(null);
+  const animationFrameRef = useRef<number | null>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    if ((!mediaRecorder && !blob) || (isPlayback && !blob)) return;
+
+    const setupAudioContext = async () => {
+      audioContextRef.current = new AudioContext();
+      analyzerRef.current = audioContextRef.current.createAnalyser();
+      analyzerRef.current.fftSize = 512;
+
+      if (isPlayback && blob) {
+        const audio = new Audio(URL.createObjectURL(blob));
+        audioRef.current = audio;
+        const source = audioContextRef.current.createMediaElementSource(audio);
+        source.connect(analyzerRef.current);
+        analyzerRef.current.connect(audioContextRef.current.destination);
+      } else if (mediaRecorder?.stream) {
+        const source = audioContextRef.current.createMediaStreamSource(
+          mediaRecorder.stream,
+        );
+        source.connect(analyzerRef.current);
+      }
+    };
+
+    const updateVisualization = () => {
+      if (!analyzerRef.current) return;
+
+      const bufferLength = analyzerRef.current.frequencyBinCount;
+      const dataArray = new Uint8Array(bufferLength);
+      analyzerRef.current.getByteFrequencyData(dataArray);
+
+      const bands = 40;
+      const samplesPerBand = Math.floor(bufferLength / bands);
+      const newData = new Array(bands).fill(0).map((_, i) => {
+        const sum = Array.from(
+          dataArray.slice(i * samplesPerBand, (i + 1) * samplesPerBand),
+        ).reduce((acc, val) => acc + val, 0);
+        return sum / (samplesPerBand * 2);
+      });
+
+      setAudioData(newData);
+      animationFrameRef.current = requestAnimationFrame(updateVisualization);
+    };
+
+    setupAudioContext();
+    if (!isPlayback) {
+      updateVisualization();
+    } else if (audioRef.current) {
+      audioRef.current.addEventListener('play', updateVisualization);
+    }
+
+    return () => {
+      if (animationFrameRef.current)
+        cancelAnimationFrame(animationFrameRef.current);
+      if (audioContextRef.current) audioContextRef.current.close();
+      if (audioRef.current)
+        audioRef.current.removeEventListener('play', updateVisualization);
+    };
+  }, [mediaRecorder, blob, isPlayback]);
+
+  return { audioData, audioRef };
+};
+
 export const AudioRecorderWithVisualizer = ({
   onTranscriptionComplete,
   userId = '01',
-}: Props & { userId?: string }) => {
-  const { theme } = useTheme();
-  const [isRecording, setIsRecording] = useState<boolean>(false);
-  const [isPaused, setIsPaused] = useState<boolean>(false);
-  const [timer, setTimer] = useState<number>(0);
-  const [isProcessing, setIsProcessing] = useState<boolean>(false);
+}: Props) => {
+  const [isRecording, setIsRecording] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
+  const [timer, setTimer] = useState(0);
+  const [isProcessing, setIsProcessing] = useState(false);
   const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(
     null,
   );
   const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
   const [recordingChunks, setRecordingChunks] = useState<Blob[]>([]);
-  const [isPlaying, setIsPlaying] = useState<boolean>(false);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
 
-  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
-  const containerRef = useRef(null);
-
-  const hours = Math.floor(timer / 3600);
-  const minutes = Math.floor((timer % 3600) / 60);
-  const seconds = timer % 60;
-
-  const [hourLeft, hourRight] = useMemo(
-    () => padWithLeadingZeros(hours, 2).split(''),
-    [hours],
-  );
-  const [minuteLeft, minuteRight] = useMemo(
-    () => padWithLeadingZeros(minutes, 2).split(''),
-    [minutes],
-  );
-  const [secondLeft, secondRight] = useMemo(
-    () => padWithLeadingZeros(seconds, 2).split(''),
-    [seconds],
+  const { audioData, audioRef } = useAudioVisualization(
+    mediaRecorder,
+    !isRecording && !!audioBlob,
+    audioBlob ?? undefined,
   );
 
-  useEffect(() => {
-    const updateDimensions = () => {
-      if (containerRef.current) {
-        const { offsetWidth, offsetHeight } = containerRef.current;
-        setDimensions({
-          width: Math.floor(offsetWidth - 32),
-          height: Math.floor(offsetHeight - 32),
-        });
-      }
-    };
+  const { hours, minutes, seconds } = useMemo(
+    () => ({
+      hours: Math.floor(timer / 3600),
+      minutes: Math.floor((timer % 3600) / 60),
+      seconds: timer % 60,
+    }),
+    [timer],
+  );
 
-    updateDimensions();
-
-    const observer = new ResizeObserver(updateDimensions);
-    if (containerRef.current) {
-      observer.observe(containerRef.current);
-    }
-
-    window.addEventListener('resize', updateDimensions);
-
-    return () => {
-      observer.disconnect();
-      window.removeEventListener('resize', updateDimensions);
-    };
-  }, []);
+  const formattedTime = useMemo(
+    () => ({
+      hours: padWithLeadingZeros(hours, 2).split(''),
+      minutes: padWithLeadingZeros(minutes, 2).split(''),
+      seconds: padWithLeadingZeros(seconds, 2).split(''),
+    }),
+    [hours, minutes, seconds],
+  );
 
   const startRecording = async () => {
     try {
@@ -239,73 +308,39 @@ export const AudioRecorderWithVisualizer = ({
           {/* Timer Section */}
           {isRecording && (
             <div className="flex justify-center items-center space-x-2 text-xl font-bold text-primary">
-              <div className="flex space-x-1">
-                <span className="bg-primary dark:text-black text-white rounded p-2">
-                  {hourLeft}
-                </span>
-                <span className="bg-primary dark:text-black text-white rounded p-2">
-                  {hourRight}
-                </span>
-              </div>
-              <span>:</span>
-              <div className="flex space-x-1">
-                <span className="bg-primary dark:text-black text-white rounded p-2">
-                  {minuteLeft}
-                </span>
-                <span className="bg-primary dark:text-black text-white rounded p-2">
-                  {minuteRight}
-                </span>
-              </div>
-              <span>:</span>
-              <div className="flex space-x-1">
-                <span className="bg-primary dark:text-black text-white rounded p-2">
-                  {secondLeft}
-                </span>
-                <span className="bg-primary dark:text-black text-white rounded p-2">
-                  {secondRight}
-                </span>
-              </div>
+              {Object.entries(formattedTime).map(
+                ([unit, [left, right]], index) => (
+                  <React.Fragment key={unit}>
+                    {index > 0 && <span>:</span>}
+                    <div className="flex space-x-1">
+                      <span className="bg-primary dark:text-black text-white rounded p-2">
+                        {left}
+                      </span>
+                      <span className="bg-primary dark:text-black text-white rounded p-2">
+                        {right}
+                      </span>
+                    </div>
+                  </React.Fragment>
+                ),
+              )}
             </div>
           )}
 
           {/* Visualizer Section */}
-          <div
-            ref={containerRef}
-            className="relative flex items-center justify-center h-40 rounded-xl bg-muted/50 p-4"
-          >
-            {isRecording && mediaRecorder && dimensions.width > 0 ? (
-              <LiveAudioVisualizer
-                mediaRecorder={mediaRecorder}
-                width={dimensions.width}
-                height={dimensions.height}
-                barWidth={3}
-                gap={2}
-                barColor={theme === 'dark' ? '#ffffff' : '#000000'}
-              />
-            ) : !isRecording && audioBlob && dimensions.width > 0 ? (
-              <div className="w-full">
-                <AudioVisualizer
-                  blob={audioBlob}
-                  width={dimensions.width}
-                  height={dimensions.height}
-                  barWidth={3}
-                  gap={2}
-                  barColor={theme === 'dark' ? '#ffffff' : '#000000'}
-                />
+          <div className="relative flex items-center justify-center h-40 rounded-xl bg-muted/50 p-4">
+            <div className="w-full h-full flex justify-center items-center">
+              <AudioVisualizer audioData={audioData} />
+              {!isRecording && audioBlob && (
                 <audio ref={audioRef} className="hidden" />
-              </div>
-            ) : (
-              <span className="text-sm dark:text-muted text-black">
-                No recording available
-              </span>
-            )}
+              )}
+            </div>
           </div>
 
           {/* Processing Indicator */}
           {isProcessing && (
             <div className="flex justify-center items-center space-x-2">
               <span className="text-sm text-muted">Processing...</span>
-              <div className="loader h-6 w-6 border-4 border-primary rounded-full border-t-transparent animate-spin"></div>
+              <div className="loader h-6 w-6 border-4 border-primary rounded-full border-t-transparent animate-spin" />
             </div>
           )}
 

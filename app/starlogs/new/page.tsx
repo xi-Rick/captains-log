@@ -67,12 +67,12 @@ export default function NewStarlogPage() {
       >
         {/* Back to Dashboard Link */}
         <Link href="/dashboard">
-            <Button variant="ghost" className="flex items-center gap-2">
-              <ArrowLeft className="h-4 w-4" />
-              Back to Bridge
-            </Button>
-          </Link>
-          <br className="h-4" />
+          <Button variant="ghost" className="flex items-center gap-2">
+            <ArrowLeft className="h-4 w-4" />
+            Back to Bridge
+          </Button>
+        </Link>
+        <br className="h-4" />
 
         {/* Content Container */}
         <div className="relative z-10 space-y-8">
@@ -95,54 +95,52 @@ export default function NewStarlogPage() {
           {/* Starlog Entries */}
           <Card className="shadow-md">
             <br className="animate-fade-in" />
-            <RevealFx speed="medium">
-              <CardContent>
-                <div className="relative mx-auto max-w-3xl space-y-6">
-                  {/* Audio Recorder with Glow Effect */}
-                  <div className="relative">
-                    <div className="absolute -inset-1 bg-gradient-to-r from-primary to-primary-foreground opacity-25 blur"></div>
-                    <div className="relative">
-                      <TooltipProvider>
-                        <AudioRecorderWithVisualizer />
-                      </TooltipProvider>
-                    </div>
-                  </div>
-
-                  {/* Signal Strength Indicator */}
-                  <div className="space-y-4 max-w-md mx-auto">
-                    <div className="flex items-center justify-between text-sm">
-                      <span className="text-muted-foreground flex items-center gap-2">
-                        <Waves className="w-4 h-4" />
-                        Signal Strength
-                      </span>
-                      <span className="text-primary font-semibold">
-                        Excellent
-                      </span>
-                    </div>
-                    <Progress value={85} className="h-2" />
-                  </div>
-
-                  {/* Signal Visualizer */}
-                  <div className="bg-background/40 rounded-lg p-4 max-w-md mx-auto">
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-sm text-muted-foreground flex items-center gap-2">
-                        <Globe2 className="w-4 h-4" />
-                        Subspace Frequency
-                      </span>
-                    </div>
-                    <SignalVisualizer />
-                  </div>
-
-                  {/* Recording Instructions */}
-                  <div className="flex justify-center items-center gap-4 text-sm text-muted-foreground">
-                    <Mic2 className="w-4 h-4" />
-                    <span className="font-semibold text-primary">
-                      Speak clearly into your ship's communication system
-                    </span>
+            <CardContent>
+              <div className="relative mx-auto max-w-3xl space-y-6">
+                {/* Audio Recorder with Glow Effect */}
+                <div className="relative">
+                  <div className="absolute -inset-1 bg-gradient-to-r from-primary to-primary-foreground opacity-25 blur"></div>
+                  <div className="relative ">
+                    <TooltipProvider>
+                      <AudioRecorderWithVisualizer />
+                    </TooltipProvider>
                   </div>
                 </div>
-              </CardContent>
-            </RevealFx>
+
+                {/* Signal Strength Indicator */}
+                <div className="space-y-4 max-w-md mx-auto">
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-muted-foreground flex items-center gap-2">
+                      <Waves className="w-4 h-4" />
+                      Signal Strength
+                    </span>
+                    <span className="text-primary font-semibold">
+                      Excellent
+                    </span>
+                  </div>
+                  <Progress value={85} className="h-2" />
+                </div>
+
+                {/* Signal Visualizer */}
+                <div className="bg-background/40 rounded-lg p-4 max-w-md mx-auto">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-sm text-muted-foreground flex items-center gap-2">
+                      <Globe2 className="w-4 h-4" />
+                      Subspace Frequency
+                    </span>
+                  </div>
+                  <SignalVisualizer />
+                </div>
+
+                {/* Recording Instructions */}
+                <div className="flex justify-center items-center gap-4 text-sm text-muted-foreground">
+                  <Mic2 className="w-4 h-4" />
+                  <span className="font-semibold text-primary">
+                    Speak clearly into your ship's communication system
+                  </span>
+                </div>
+              </div>
+            </CardContent>
           </Card>
 
           {/* Stardate Display */}
