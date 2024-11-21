@@ -43,6 +43,7 @@ export default function Documentation() {
         },
         { name: 'Tailwind CSS', description: 'Utility-first CSS framework' },
         { name: 'shadcn/ui', description: 'Reusable component library' },
+        { name: 'once-ui', description: 'UI components library' },
         { name: 'Framer Motion', description: 'Animation library' },
       ],
     },

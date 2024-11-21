@@ -37,6 +37,23 @@ export default function Issues() {
   const issues = [
     {
       id: 1,
+      title: 'Voice Command to End Transmission',
+      description:
+        'Users cannot stop the transcription process with voice commands, requiring manual interaction.',
+      priority: 'high',
+      category: 'core',
+      status: 'planned',
+      impact: 'User Workflow',
+      solutions: [
+        'Add keyword-based voice detection for "End Transmission."',
+        'Integrate Whisper API with real-time command recognition.',
+        'Include a fallback timeout to auto-stop after inactivity.',
+      ],
+      timeframe: '2 weeks',
+      progress: 0,
+    },
+    {
+      id: 2,
       title: 'Audio Transcription Accuracy',
       description:
         'OpenAI transcription occasionally misinterprets technical terms and proper nouns.',
@@ -53,7 +70,7 @@ export default function Issues() {
       progress: 35,
     },
     {
-      id: 2,
+      id: 3,
       title: 'Authentication Token Expiration',
       description:
         'Users getting logged out unexpectedly during long sessions.',
@@ -69,7 +86,40 @@ export default function Issues() {
       timeframe: '1 week',
       progress: 20,
     },
-    // Add more issues here...
+    {
+      id: 4,
+      title: 'Slow UI Response During Large Logs',
+      description:
+        'The application becomes unresponsive when users interact with logs containing thousands of entries.',
+      priority: 'medium',
+      category: 'performance',
+      status: 'in-progress',
+      impact: 'App Performance',
+      solutions: [
+        'Implement pagination for log rendering.',
+        'Optimize database queries for fetching large data sets.',
+        'Introduce lazy loading for UI components.',
+      ],
+      timeframe: '3 weeks',
+      progress: 45,
+    },
+    {
+      id: 5,
+      title: 'Dark Mode Display Issues',
+      description:
+        'Some components display incorrect colors in dark mode, reducing readability.',
+      priority: 'medium',
+      category: 'ui',
+      status: 'open',
+      impact: 'Visual Design',
+      solutions: [
+        'Audit all UI components for dark mode compatibility.',
+        'Use TailwindCSS dark mode utilities to fix color contrast.',
+        'Add unit tests for theme consistency.',
+      ],
+      timeframe: '1 week',
+      progress: 10,
+    },
   ];
 
   const getCategoryIcon = (category: string) => {
