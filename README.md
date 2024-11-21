@@ -1,7 +1,7 @@
 # Captain's Log - A Personal AI Transcription Logbook
 
 <p align="center">
-  <img src="https://i.imgur.com/bv9e7IP.png" alt="Captain's Log Logo"/>
+  <img src="https://i.imgur.com/I8p2Xjn.png" alt="Captain's Log Logo"/>
 </p>
 
 **Captain's Log** is your personal AI-powered voice transcription logbook. This innovative web application allows you to transcribe spoken words into text, organize your thoughts, and manage important notes. Built with cutting-edge technology and creative design, Captain's Log sets sail to revolutionize how you capture and manage ideas.

@@ -102,7 +102,7 @@ export default function NewStarlogPage() {
               </CardHeader>
             </Card>
 
-            {/* Starlog Entries */}
+            {/* Audio Recorder Card */} 
             <Card className="shadow-md">
               <br className="animate-fade-in" />
               <CardContent>
