@@ -35,55 +35,63 @@ export default function SettingsPage() {
   }
 
   return (
-    <RevealFx>
-      <div className="container mx-auto py-10 px-6 max-w-4xl">
-        <Link href="/dashboard">
-          <Button variant="ghost" className="flex items-center gap-2">
-            <ArrowLeft className="h-4 w-4" />
-            Back to Bridge
-          </Button>
-        </Link>
-
-        <h1 className="text-3xl font-bold text-center mb-8">Settings</h1>
-
-        {/* Account Settings Section */}
-        <AccountSettings />
-
-        {/* App Preferences Section */}
-        <section className="mb-8">
-          <h2 className="text-xl font-semibold mb-4 flex items-center">
-            <Settings className="h-5 w-5 mr-2" /> {/* Settings Icon */}
-            App Preferences
-          </h2>
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <span className="font-medium flex items-center">
-                <User className="h-4 w-4 mr-1" /> {/* User Icon */}
-                Theme
-              </span>
-              <ThemeSwitcher />
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="font-medium flex items-center">
-                <HelpCircle className="h-4 w-4 mr-1" /> {/* Help Icon */}
-                Help
-              </span>
-
-              <Button
-                onClick={() =>
-                  window.open(
-                    'https://github.com/xi-rick/captains-log',
-                    '_blank',
-                  )
-                }
-                variant="outline"
-              >
-                Get Help
-              </Button>
-            </div>
-          </div>
-        </section>
+    <>
+      <div className="absolute inset-0">
+        {/* Light mode: black dots */}
+        <div className="absolute inset-0 bg-[radial-gradient(black_1px,transparent_1px)] bg-[length:50px_50px] opacity-25 dark:opacity-0"></div>
+        {/* Dark mode: white dots */}
+        <div className="absolute inset-0 bg-[radial-gradient(white_1px,transparent_1px)] bg-[length:50px_50px] opacity-25 dark:opacity-25"></div>
       </div>
-    </RevealFx>
+      <RevealFx>
+        <div className="container mx-auto py-10 px-6 max-w-4xl">
+          <Link href="/dashboard">
+            <Button variant="ghost" className="flex items-center gap-2">
+              <ArrowLeft className="h-4 w-4" />
+              Back to Bridge
+            </Button>
+          </Link>
+
+          <h1 className="text-3xl font-bold text-center mb-8">Settings</h1>
+
+          {/* Account Settings Section */}
+          <AccountSettings />
+
+          {/* App Preferences Section */}
+          <section className="mb-8">
+            <h2 className="text-xl font-semibold mb-4 flex items-center">
+              <Settings className="h-5 w-5 mr-2" /> {/* Settings Icon */}
+              App Preferences
+            </h2>
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <span className="font-medium flex items-center">
+                  <User className="h-4 w-4 mr-1" /> {/* User Icon */}
+                  Theme
+                </span>
+                <ThemeSwitcher />
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="font-medium flex items-center">
+                  <HelpCircle className="h-4 w-4 mr-1" /> {/* Help Icon */}
+                  Help
+                </span>
+
+                <Button
+                  onClick={() =>
+                    window.open(
+                      'https://github.com/xi-rick/captains-log',
+                      '_blank',
+                    )
+                  }
+                  variant="outline"
+                >
+                  Get Help
+                </Button>
+              </div>
+            </div>
+          </section>
+        </div>
+      </RevealFx>
+    </>
   );
 }

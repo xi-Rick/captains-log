@@ -119,152 +119,162 @@ export default function StarLogs() {
   }
 
   return (
-    <MotionConfig reducedMotion="user">
-      <motion.div
-        initial="hidden"
-        animate="visible"
-        variants={containerVariants}
-        className="mx-auto max-w-4xl px-4 py-8 space-y-8"
-      >
+    <>
+      {/* Animated stars background */}
+      <div className="absolute inset-0">
+        {/* Light mode: black dots */}
+        <div className="absolute inset-0 bg-[radial-gradient(black_1px,transparent_1px)] bg-[length:50px_50px] opacity-25 dark:opacity-0"></div>
+        {/* Dark mode: white dots */}
+        <div className="absolute inset-0 bg-[radial-gradient(white_1px,transparent_1px)] bg-[length:50px_50px] opacity-25 dark:opacity-25"></div>
+      </div>
+
+      <MotionConfig reducedMotion="user">
         <motion.div
-          variants={itemVariants}
-          className="mb-6 flex items-center justify-between"
+          initial="hidden"
+          animate="visible"
+          variants={containerVariants}
+          className="relative mx-auto max-w-4xl px-4 py-8 space-y-8"
         >
-          <Link href="/dashboard">
-            <Button variant="ghost" className="flex items-center gap-2">
-              <ArrowLeft className="h-4 w-4" />
-              Back to Bridge
-            </Button>
-          </Link>
-        </motion.div>
+          <motion.div
+            variants={itemVariants}
+            className="mb-6 flex items-center justify-between"
+          >
+            <Link href="/dashboard">
+              <Button variant="ghost" className="flex items-center gap-2">
+                <ArrowLeft className="h-4 w-4" />
+                Back to Bridge
+              </Button>
+            </Link>
+          </motion.div>
 
-        <motion.div
-          variants={itemVariants}
-          className="relative max-w-md mx-auto"
-        >
-          <div className="absolute top-2 left-3 flex items-center text-muted-foreground">
-            <Search className="h-5 w-5" />
-          </div>
-          <Input
-            type="text"
-            placeholder="Search logs..."
-            className="w-full pl-10"
-            value={searchTerm}
-            onChange={handleSearchChange}
-          />
-        </motion.div>
+          <motion.div
+            variants={itemVariants}
+            className="relative max-w-md mx-auto"
+          >
+            <div className="absolute top-2 left-3 flex items-center text-muted-foreground">
+              <Search className="h-5 w-5" />
+            </div>
+            <Input
+              type="text"
+              placeholder="Search logs..."
+              className="w-full pl-10"
+              value={searchTerm}
+              onChange={handleSearchChange}
+            />
+          </motion.div>
 
-        <AnimatePresence mode="wait">
-          {isLoading ? (
-            <motion.div
-              key="loading"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-            >
-              <Card className="animate-pulse border-none shadow-sm">
-                <CardHeader>
-                  <div className="h-8 w-2/3 rounded bg-muted" />
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div className="h-4 w-full rounded bg-muted" />
-                    <div className="h-4 w-5/6 rounded bg-muted" />
-                    <div className="h-4 w-4/6 rounded bg-muted" />
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ) : error ? (
-            <motion.div
-              key="error"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-            >
-              <Card className="border-destructive/20 bg-destructive/10 shadow-sm">
-                <CardHeader>
-                  <CardTitle className="text-destructive">Error</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-destructive">{error}</p>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ) : filteredLogs.length > 0 ? (
-            <motion.div
-              key="logs"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-            >
-              <AnimatePresence>
-                {filteredLogs.map((log) => (
-                  <motion.div
-                    key={log._id.toString()}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    transition={{ duration: 0.3 }}
-                    className="mb-4"
-                  >
-                    <Card className="hover:shadow-md transition-shadow">
-                      <Link href={`/starlogs/${log._id.toString()}`}>
-                        <CardHeader>
-                          <CardTitle className="text-xl font-bold">
-                            {log.title ||
-                              `Log Entry ${log._id.toString().slice(-4)}`}
-                          </CardTitle>
+          <AnimatePresence mode="wait">
+            {isLoading ? (
+              <motion.div
+                key="loading"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+              >
+                <Card className="animate-pulse border-none shadow-sm">
+                  <CardHeader>
+                    <div className="h-8 w-2/3 rounded bg-muted" />
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-4">
+                      <div className="h-4 w-full rounded bg-muted" />
+                      <div className="h-4 w-5/6 rounded bg-muted" />
+                      <div className="h-4 w-4/6 rounded bg-muted" />
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ) : error ? (
+              <motion.div
+                key="error"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+              >
+                <Card className="border-destructive/20 bg-destructive/10 shadow-sm">
+                  <CardHeader>
+                    <CardTitle className="text-destructive">Error</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-destructive">{error}</p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ) : filteredLogs.length > 0 ? (
+              <motion.div
+                key="logs"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+              >
+                <AnimatePresence>
+                  {filteredLogs.map((log) => (
+                    <motion.div
+                      key={log._id.toString()}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -20 }}
+                      transition={{ duration: 0.3 }}
+                      className="mb-4"
+                    >
+                      <Card className="hover:shadow-md transition-shadow">
+                        <Link href={`/starlogs/${log._id.toString()}`}>
+                          <CardHeader>
+                            <CardTitle className="text-xl font-bold">
+                              {log.title ||
+                                `Log Entry ${log._id.toString().slice(-4)}`}
+                            </CardTitle>
 
-                          <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                            <span className="flex items-center gap-1">
-                              <Calendar className="h-4 w-4" />
-                              {formatTimestamp(log.timestamp)}
-                            </span>
+                            <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                              <span className="flex items-center gap-1">
+                                <Calendar className="h-4 w-4" />
+                                {formatTimestamp(log.timestamp)}
+                              </span>
+                            </div>
+                          </CardHeader>
+                        </Link>
+                        <CardContent>
+                          <div className="prose dark:prose-invert">
+                            {log.text || log.content ? (
+                              (log.text || log.content)
+                                .split('\n')
+                                .map((paragraph, index) => (
+                                  <p key={index} className="mb-4">
+                                    {highlightText(paragraph, searchTerm)}
+                                  </p>
+                                ))
+                            ) : (
+                              <p>No text available for this log.</p>
+                            )}
                           </div>
-                        </CardHeader>
-                      </Link>
-                      <CardContent>
-                        <div className="prose dark:prose-invert">
-                          {log.text || log.content ? (
-                            (log.text || log.content)
-                              .split('\n')
-                              .map((paragraph, index) => (
-                                <p key={index} className="mb-4">
-                                  {highlightText(paragraph, searchTerm)}
-                                </p>
-                              ))
-                          ) : (
-                            <p>No text available for this log.</p>
-                          )}
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </motion.div>
-                ))}
-              </AnimatePresence>
-            </motion.div>
-          ) : (
-            <motion.div
-              key="no-logs"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-            >
-              <Card>
-                <CardHeader>
-                  <CardTitle>No Logs Found</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground">
-                    No logs match your search criteria.
-                  </p>
-                </CardContent>
-              </Card>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </motion.div>
-    </MotionConfig>
+                        </CardContent>
+                      </Card>
+                    </motion.div>
+                  ))}
+                </AnimatePresence>
+              </motion.div>
+            ) : (
+              <motion.div
+                key="no-logs"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+              >
+                <Card>
+                  <CardHeader>
+                    <CardTitle>No Logs Found</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground">
+                      No logs match your search criteria.
+                    </p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </motion.div>
+      </MotionConfig>
+    </>
   );
 }

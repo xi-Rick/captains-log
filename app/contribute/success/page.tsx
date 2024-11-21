@@ -61,28 +61,37 @@ export default function SuccessPage() {
   }, []);
 
   return (
-    <RevealFx>
-      <div className="container flex min-h-screen items-center justify-center flex-col text-center">
-        <Card className="w-full max-w-md mx-auto">
-          <CardHeader>
-            <CardTitle>Donation Status</CardTitle>
-            <CardDescription>
-              {isLoading
-                ? 'Verifying payment...'
-                : success
-                  ? 'Thank you for your donation! Your contribution was successfully processed.'
-                  : error || 'An unexpected error occurred.'}
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <Button onClick={() => router.push('/')} className="w-full">
-                Back to Home
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
+    <>
+      {/* Animated stars background */}
+      <div className="absolute inset-0">
+        {/* Light mode: black dots */}
+        <div className="absolute inset-0 bg-[radial-gradient(black_1px,transparent_1px)] bg-[length:50px_50px] opacity-25 dark:opacity-0"></div>
+        {/* Dark mode: white dots */}
+        <div className="absolute inset-0 bg-[radial-gradient(white_1px,transparent_1px)] bg-[length:50px_50px] opacity-25 dark:opacity-25"></div>
       </div>
-    </RevealFx>
+      <RevealFx>
+        <div className="container flex min-h-screen items-center justify-center flex-col text-center">
+          <Card className="w-full max-w-md mx-auto">
+            <CardHeader>
+              <CardTitle>Donation Status</CardTitle>
+              <CardDescription>
+                {isLoading
+                  ? 'Verifying payment...'
+                  : success
+                    ? 'Thank you for your donation! Your contribution was successfully processed.'
+                    : error || 'An unexpected error occurred.'}
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <Button onClick={() => router.push('/')} className="w-full">
+                  Back to Home
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </RevealFx>
+    </>
   );
 }

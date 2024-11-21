@@ -33,10 +33,19 @@ export default function Page() {
   }
 
   return (
-    <RevealFx>
-      <div className="mx-auto px-4 py-8 space-y-8 flex-1 overflow-hidden">
-        <DashboardHeroSection />
+    <>
+      {/* Animated stars background */}
+      <div className="absolute inset-0">
+        {/* Light mode: black dots */}
+        <div className="absolute inset-0 bg-[radial-gradient(black_1px,transparent_1px)] bg-[length:50px_50px] opacity-25 dark:opacity-0"></div>
+        {/* Dark mode: white dots */}
+        <div className="absolute inset-0 bg-[radial-gradient(white_1px,transparent_1px)] bg-[length:50px_50px] opacity-25 dark:opacity-25"></div>
       </div>
-    </RevealFx>
+      <RevealFx>
+        <div className="mx-auto px-4 py-8 space-y-8 flex-1 overflow-hidden">
+          <DashboardHeroSection />
+        </div>
+      </RevealFx>
+    </>
   );
 }

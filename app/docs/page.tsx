@@ -99,231 +99,240 @@ export default function Documentation() {
   ];
 
   return (
-    <RevealFx>
-      <div className="container py-8 space-y-6">
-        <Link
-          href="/"
-          className={cn(
-            buttonVariants({ variant: 'ghost' }),
-            'absolute left-4 top-4 md:left-8 md:top-8',
-          )}
-        >
-          <ChevronLeft className="mr-2 size-4" />
-          Back
-        </Link>
-        <br />
-        <div className="flex justify-between items-center">
-          <h1 className="text-4xl font-bold">Documentation</h1>
-        </div>
+    <>
+      {/* Animated stars background */}
+      <div className="absolute inset-0">
+        {/* Light mode: black dots */}
+        <div className="absolute inset-0 bg-[radial-gradient(black_1px,transparent_1px)] bg-[length:50px_50px] opacity-25 dark:opacity-0"></div>
+        {/* Dark mode: white dots */}
+        <div className="absolute inset-0 bg-[radial-gradient(white_1px,transparent_1px)] bg-[length:50px_50px] opacity-25 dark:opacity-25"></div>
+      </div>
+      <RevealFx>
+        <div className="container py-8 space-y-6">
+          <Link
+            href="/"
+            className={cn(
+              buttonVariants({ variant: 'ghost' }),
+              'absolute left-4 top-4 md:left-8 md:top-8',
+            )}
+          >
+            <ChevronLeft className="mr-2 size-4" />
+            Back
+          </Link>
+          <br />
+          <div className="flex justify-between items-center">
+            <h1 className="text-4xl font-bold">Documentation</h1>
+          </div>
 
-        <Alert>
-          <Info className="h-4 w-4" />
-          <AlertTitle>Documentation Beta</AlertTitle>
-          <AlertDescription>
-            This documentation is being actively developed. Check back regularly
-            for updates.
-          </AlertDescription>
-        </Alert>
+          <Alert>
+            <Info className="h-4 w-4" />
+            <AlertTitle>Documentation Beta</AlertTitle>
+            <AlertDescription>
+              This documentation is being actively developed. Check back
+              regularly for updates.
+            </AlertDescription>
+          </Alert>
 
-        <Tabs defaultValue="overview" className="space-y-4">
-          <TabsList>
-            <TabsTrigger value="overview">Overview</TabsTrigger>
-            <TabsTrigger value="tech">Technologies</TabsTrigger>
-            <TabsTrigger value="schema">Schema</TabsTrigger>
-          </TabsList>
+          <Tabs defaultValue="overview" className="space-y-4">
+            <TabsList>
+              <TabsTrigger value="overview">Overview</TabsTrigger>
+              <TabsTrigger value="tech">Technologies</TabsTrigger>
+              <TabsTrigger value="schema">Schema</TabsTrigger>
+            </TabsList>
 
-          <TabsContent value="overview">
-            <Card className="border-none shadow-none">
-              <CardHeader className="space-y-2">
-                <CardTitle className="text-2xl font-bold">
-                  Transform Spoken Thoughts into Structured Knowledge
-                </CardTitle>
-                <CardDescription className="text-base">
-                  Captain's Log combines voice recording with AI processing to
-                  create a unique documentation experience that adapts to your
-                  workflow and thinking style.
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                {/* Key Use Cases Section */}
-                <div className="space-y-4">
-                  <h3 className="font-semibold text-lg">Perfect For:</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <h4 className="font-medium text-primary">
-                        Professional Development
-                      </h4>
-                      <ul className="space-y-1 text-sm text-muted-foreground">
-                        <li>
-                          • Record meeting insights and action items on the go
-                        </li>
-                        <li>• Document project decisions and rationales</li>
-                        <li>• Track client interactions and follow-ups</li>
-                      </ul>
-                    </div>
-                    <div className="space-y-2">
-                      <h4 className="font-medium text-primary">
-                        Creative Work
-                      </h4>
-                      <ul className="space-y-1 text-sm text-muted-foreground">
-                        <li>• Capture writing ideas and story concepts</li>
-                        <li>• Record musical compositions and melodies</li>
-                        <li>• Document design iterations and feedback</li>
-                      </ul>
-                    </div>
-                    <div className="space-y-2">
-                      <h4 className="font-medium text-primary">
-                        Personal Growth
-                      </h4>
-                      <ul className="space-y-1 text-sm text-muted-foreground">
-                        <li>• Maintain a voice-driven reflection journal</li>
-                        <li>• Track goals and progress updates</li>
-                        <li>• Record gratitude and achievements</li>
-                      </ul>
-                    </div>
-                    <div className="space-y-2">
-                      <h4 className="font-medium text-primary">
-                        Research & Learning
-                      </h4>
-                      <ul className="space-y-1 text-sm text-muted-foreground">
-                        <li>• Document research observations</li>
-                        <li>• Create study notes and summaries</li>
-                        <li>• Record interview insights</li>
-                      </ul>
+            <TabsContent value="overview">
+              <Card className="border-none shadow-none">
+                <CardHeader className="space-y-2">
+                  <CardTitle className="text-2xl font-bold">
+                    Transform Spoken Thoughts into Structured Knowledge
+                  </CardTitle>
+                  <CardDescription className="text-base">
+                    Captain's Log combines voice recording with AI processing to
+                    create a unique documentation experience that adapts to your
+                    workflow and thinking style.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  {/* Key Use Cases Section */}
+                  <div className="space-y-4">
+                    <h3 className="font-semibold text-lg">Perfect For:</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <h4 className="font-medium text-primary">
+                          Professional Development
+                        </h4>
+                        <ul className="space-y-1 text-sm text-muted-foreground">
+                          <li>
+                            • Record meeting insights and action items on the go
+                          </li>
+                          <li>• Document project decisions and rationales</li>
+                          <li>• Track client interactions and follow-ups</li>
+                        </ul>
+                      </div>
+                      <div className="space-y-2">
+                        <h4 className="font-medium text-primary">
+                          Creative Work
+                        </h4>
+                        <ul className="space-y-1 text-sm text-muted-foreground">
+                          <li>• Capture writing ideas and story concepts</li>
+                          <li>• Record musical compositions and melodies</li>
+                          <li>• Document design iterations and feedback</li>
+                        </ul>
+                      </div>
+                      <div className="space-y-2">
+                        <h4 className="font-medium text-primary">
+                          Personal Growth
+                        </h4>
+                        <ul className="space-y-1 text-sm text-muted-foreground">
+                          <li>• Maintain a voice-driven reflection journal</li>
+                          <li>• Track goals and progress updates</li>
+                          <li>• Record gratitude and achievements</li>
+                        </ul>
+                      </div>
+                      <div className="space-y-2">
+                        <h4 className="font-medium text-primary">
+                          Research & Learning
+                        </h4>
+                        <ul className="space-y-1 text-sm text-muted-foreground">
+                          <li>• Document research observations</li>
+                          <li>• Create study notes and summaries</li>
+                          <li>• Record interview insights</li>
+                        </ul>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                {/* Unique Value Props */}
-                <div className="space-y-4">
-                  <h3 className="font-semibold text-lg">
-                    Why Captain's Log Stands Out:
-                  </h3>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div className="p-4 bg-secondary/20 rounded-lg">
-                      <h4 className="font-medium mb-2">
-                        Hands-Free Efficiency
-                      </h4>
-                      <p className="text-sm text-muted-foreground">
-                        Record thoughts naturally while multitasking, driving,
-                        or walking
-                      </p>
-                    </div>
-                    <div className="p-4 bg-secondary/20 rounded-lg">
-                      <h4 className="font-medium mb-2">
-                        AI-Powered Organization
-                      </h4>
-                      <p className="text-sm text-muted-foreground">
-                        Automatic categorization and tagging of entries for easy
-                        retrieval
-                      </p>
-                    </div>
-                    <div className="p-4 bg-secondary/20 rounded-lg">
-                      <h4 className="font-medium mb-2">Smart Summaries</h4>
-                      <p className="text-sm text-muted-foreground">
-                        Get AI-generated insights and key points from your
-                        longer recordings
-                      </p>
+                  {/* Unique Value Props */}
+                  <div className="space-y-4">
+                    <h3 className="font-semibold text-lg">
+                      Why Captain's Log Stands Out:
+                    </h3>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      <div className="p-4 bg-secondary/20 rounded-lg">
+                        <h4 className="font-medium mb-2">
+                          Hands-Free Efficiency
+                        </h4>
+                        <p className="text-sm text-muted-foreground">
+                          Record thoughts naturally while multitasking, driving,
+                          or walking
+                        </p>
+                      </div>
+                      <div className="p-4 bg-secondary/20 rounded-lg">
+                        <h4 className="font-medium mb-2">
+                          AI-Powered Organization
+                        </h4>
+                        <p className="text-sm text-muted-foreground">
+                          Automatic categorization and tagging of entries for
+                          easy retrieval
+                        </p>
+                      </div>
+                      <div className="p-4 bg-secondary/20 rounded-lg">
+                        <h4 className="font-medium mb-2">Smart Summaries</h4>
+                        <p className="text-sm text-muted-foreground">
+                          Get AI-generated insights and key points from your
+                          longer recordings
+                        </p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
+                </CardContent>
+              </Card>
+            </TabsContent>
 
-          <TabsContent value="tech" className="space-y-4">
-            {technologies.map((tech) => (
-              <Card key={tech.category}>
+            <TabsContent value="tech" className="space-y-4">
+              {technologies.map((tech) => (
+                <Card key={tech.category}>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      {tech.category === 'Frontend' ? (
+                        <Code className="h-5 w-5" />
+                      ) : (
+                        <Database className="h-5 w-5" />
+                      )}
+                      {tech.category} Technologies
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>Technology</TableHead>
+                          <TableHead>Description</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {tech.items.map((item) => (
+                          <TableRow key={item.name}>
+                            <TableCell className="font-medium">
+                              {item.name}
+                            </TableCell>
+                            <TableCell>{item.description}</TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </CardContent>
+                </Card>
+              ))}
+            </TabsContent>
+
+            <TabsContent value="schema" className="space-y-4">
+              <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
-                    {tech.category === 'Frontend' ? (
-                      <Code className="h-5 w-5" />
-                    ) : (
-                      <Database className="h-5 w-5" />
-                    )}
-                    {tech.category} Technologies
+                    <Mic className="h-5 w-5" />
+                    Transcription Schema
                   </CardTitle>
+                  <CardDescription>
+                    Details of the audio transcription data structure
+                  </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <Table>
                     <TableHeader>
                       <TableRow>
-                        <TableHead>Technology</TableHead>
+                        <TableHead>Field</TableHead>
+                        <TableHead>Type</TableHead>
                         <TableHead>Description</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {tech.items.map((item) => (
-                        <TableRow key={item.name}>
+                      {transcriptionFields.map((field) => (
+                        <TableRow key={field.field}>
                           <TableCell className="font-medium">
-                            {item.name}
+                            {field.field}
                           </TableCell>
-                          <TableCell>{item.description}</TableCell>
+                          <TableCell className="font-mono">
+                            {field.type}
+                          </TableCell>
+                          <TableCell>{field.description}</TableCell>
                         </TableRow>
                       ))}
                     </TableBody>
                   </Table>
                 </CardContent>
               </Card>
-            ))}
-          </TabsContent>
+            </TabsContent>
+          </Tabs>
 
-          <TabsContent value="schema" className="space-y-4">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Mic className="h-5 w-5" />
-                  Transcription Schema
-                </CardTitle>
-                <CardDescription>
-                  Details of the audio transcription data structure
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Field</TableHead>
-                      <TableHead>Type</TableHead>
-                      <TableHead>Description</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {transcriptionFields.map((field) => (
-                      <TableRow key={field.field}>
-                        <TableCell className="font-medium">
-                          {field.field}
-                        </TableCell>
-                        <TableCell className="font-mono">
-                          {field.type}
-                        </TableCell>
-                        <TableCell>{field.description}</TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </CardContent>
-            </Card>
-          </TabsContent>
-        </Tabs>
-
-        <Button
-          variant="outline"
-          className="mt-4"
-          onClick={() =>
-            toast({
-              title: 'Documentation Updates',
-              description: 'More detailed documentation coming soon!',
-              action: (
-                <ToastAction altText="Learn more">Learn more</ToastAction>
-              ),
-            })
-          }
-        >
-          <Zap className="mr-2 h-4 w-4" />
-          Check for Updates
-        </Button>
-      </div>
-    </RevealFx>
+          <Button
+            variant="outline"
+            className="mt-4"
+            onClick={() =>
+              toast({
+                title: 'Documentation Updates',
+                description: 'More detailed documentation coming soon!',
+                action: (
+                  <ToastAction altText="Learn more">Learn more</ToastAction>
+                ),
+              })
+            }
+          >
+            <Zap className="mr-2 h-4 w-4" />
+            Check for Updates
+          </Button>
+        </div>
+      </RevealFx>
+    </>
   );
 }

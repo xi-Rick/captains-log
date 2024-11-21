@@ -93,112 +93,125 @@ export default function Issues() {
       : issues.filter((issue) => issue.priority === selectedPriority);
 
   return (
-    <RevealFx>
-      <div className="container py-8 space-y-6 ">
-        <Link
-          href="/"
-          className={cn(
-            buttonVariants({ variant: 'ghost' }),
-            'absolute left-4 top-4 md:left-8 md:top-8',
-          )}
-        >
-          <ChevronLeft className="mr-2 size-4" />
-          Back
-        </Link>
-        <br />
-        <div className="flex justify-between items-center">
-          <h1 className="text-4xl font-bold">Issues Tracker</h1>
-        </div>
-
-        <Alert variant="destructive">
-          <AlertCircle className="h-4 w-4" />
-          <AlertTitle>Critical Issues</AlertTitle>
-          <AlertDescription>
-            There are {issues.filter((i) => i.priority === 'high').length}{' '}
-            high-priority issues that need attention.
-          </AlertDescription>
-        </Alert>
-
-        <Tabs
-          defaultValue="overview"
-          className="space-y-4"
-          value={selectedPriority}
-          onValueChange={setSelectedPriority}
-        >
-          <TabsList>
-            <TabsTrigger value="all">All Issues</TabsTrigger>
-            <TabsTrigger value="high">High Priority</TabsTrigger>
-            <TabsTrigger value="medium">Medium Priority</TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="all">{/* Display all issues here */}</TabsContent>
-          <TabsContent value="high">
-            {/* Display high priority issues here */}
-          </TabsContent>
-          <TabsContent value="medium">
-            {/* Display medium priority issues here */}
-          </TabsContent>
-        </Tabs>
-
-        <div className="grid gap-6">
-          {filteredIssues.map((issue) => (
-            <Card key={issue.id}>
-              <CardHeader>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    {getCategoryIcon(issue.category)}
-                    <CardTitle>{issue.title}</CardTitle>
-                  </div>
-                  <Badge>{issue.priority} priority</Badge>
-                </div>
-                <CardDescription>{issue.description}</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <div>
-                    <h4 className="font-semibold mb-2">Potential Solutions:</h4>
-                    <ul className="list-disc pl-6 space-y-1">
-                      {issue.solutions.map((solution, index) => (
-                        <li key={index}>{solution}</li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <div className="flex items-center gap-2">
-                      <Clock className="h-4 w-4" />
-                      <span className="text-sm">
-                        Timeframe: {issue.timeframe}
-                      </span>
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex justify-between mb-1">
-                        <span className="text-sm">Progress</span>
-                        <span className="text-sm">{issue.progress}%</span>
-                      </div>
-                      <Progress value={issue.progress} className="h-2" />
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-
-        <Button
-          variant="outline"
-          className="mt-4"
-          onClick={() =>
-            toast({
-              title: 'Issues Tracker',
-              description: 'Issue statuses are updated daily.',
-              action: <ToastAction altText="Refresh">Refresh</ToastAction>,
-            })
-          }
-        >
-          <ArrowUpCircle className="mr-2 h-4 w-4" />
-          Check for Updates
-        </Button>
+    <>
+      {/* Animated stars background */}
+      <div className="absolute inset-0">
+        {/* Light mode: black dots */}
+        <div className="absolute inset-0 bg-[radial-gradient(black_1px,transparent_1px)] bg-[length:50px_50px] opacity-25 dark:opacity-0"></div>
+        {/* Dark mode: white dots */}
+        <div className="absolute inset-0 bg-[radial-gradient(white_1px,transparent_1px)] bg-[length:50px_50px] opacity-25 dark:opacity-25"></div>
       </div>
-    </RevealFx>
+      <RevealFx>
+        <div className="container py-8 space-y-6 ">
+          <Link
+            href="/"
+            className={cn(
+              buttonVariants({ variant: 'ghost' }),
+              'absolute left-4 top-4 md:left-8 md:top-8',
+            )}
+          >
+            <ChevronLeft className="mr-2 size-4" />
+            Back
+          </Link>
+          <br />
+          <div className="flex justify-between items-center">
+            <h1 className="text-4xl font-bold">Issues Tracker</h1>
+          </div>
+
+          <Alert variant="destructive">
+            <AlertCircle className="h-4 w-4" />
+            <AlertTitle>Critical Issues</AlertTitle>
+            <AlertDescription>
+              There are {issues.filter((i) => i.priority === 'high').length}{' '}
+              high-priority issues that need attention.
+            </AlertDescription>
+          </Alert>
+
+          <Tabs
+            defaultValue="overview"
+            className="space-y-4"
+            value={selectedPriority}
+            onValueChange={setSelectedPriority}
+          >
+            <TabsList>
+              <TabsTrigger value="all">All Issues</TabsTrigger>
+              <TabsTrigger value="high">High Priority</TabsTrigger>
+              <TabsTrigger value="medium">Medium Priority</TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="all">
+              {/* Display all issues here */}
+            </TabsContent>
+            <TabsContent value="high">
+              {/* Display high priority issues here */}
+            </TabsContent>
+            <TabsContent value="medium">
+              {/* Display medium priority issues here */}
+            </TabsContent>
+          </Tabs>
+
+          <div className="grid gap-6">
+            {filteredIssues.map((issue) => (
+              <Card key={issue.id}>
+                <CardHeader>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      {getCategoryIcon(issue.category)}
+                      <CardTitle>{issue.title}</CardTitle>
+                    </div>
+                    <Badge>{issue.priority} priority</Badge>
+                  </div>
+                  <CardDescription>{issue.description}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    <div>
+                      <h4 className="font-semibold mb-2">
+                        Potential Solutions:
+                      </h4>
+                      <ul className="list-disc pl-6 space-y-1">
+                        {issue.solutions.map((solution, index) => (
+                          <li key={index}>{solution}</li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <div className="flex items-center gap-2">
+                        <Clock className="h-4 w-4" />
+                        <span className="text-sm">
+                          Timeframe: {issue.timeframe}
+                        </span>
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex justify-between mb-1">
+                          <span className="text-sm">Progress</span>
+                          <span className="text-sm">{issue.progress}%</span>
+                        </div>
+                        <Progress value={issue.progress} className="h-2" />
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          <Button
+            variant="outline"
+            className="mt-4"
+            onClick={() =>
+              toast({
+                title: 'Issues Tracker',
+                description: 'Issue statuses are updated daily.',
+                action: <ToastAction altText="Refresh">Refresh</ToastAction>,
+              })
+            }
+          >
+            <ArrowUpCircle className="mr-2 h-4 w-4" />
+            Check for Updates
+          </Button>
+        </div>
+      </RevealFx>
+    </>
   );
 }
