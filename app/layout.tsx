@@ -1,10 +1,11 @@
+import { ThemeProvider } from '@/components/theme-provider';
+import { Toaster } from '@/components/ui/toaster';
+import '@/styles/globals.css';
+import { Analytics } from '@vercel/analytics/next';
 import type { Metadata } from 'next';
 import { Inter as FontSans } from 'next/font/google';
-import { ThemeProvider } from '~/components/theme-provider';
-import { Toaster } from '@/components/ui/toaster';
-import { cn } from './utils/cn';
-import '~/styles/globals.css';
 import { SessionWrapper } from './SessionWrapper';
+import { cn } from './utils/cn';
 
 //console.log(
 //"Captain's Log, Stardate 9529.1: This is the final cruise of the Starship Enterprise under my command. This ship and her history will shortly become the care of another crew. To them and their posterity will we commit our future. They will continue the voyages we have begun and journey to all the undiscovered countries, boldly going where no man - where no one - has gone before. 🚀",
@@ -70,6 +71,7 @@ export default function RootLayout({
         )}
       >
         <SessionWrapper>
+          <Analytics />
           <ThemeProvider
             attribute="class"
             defaultTheme="dark"
